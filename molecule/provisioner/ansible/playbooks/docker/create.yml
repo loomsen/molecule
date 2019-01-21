@@ -4,6 +4,18 @@
   connection: local
   gather_facts: false
   no_log: "{{ not (lookup('env', 'MOLECULE_DEBUG') | bool or molecule_yml.provisioner.log|default(false) | bool) }}"
+  pre_tasks:
+    - name: create networks on localhost
+      docker_network:
+        name: "{{ item.name }}"
+        ipam_options:
+          subnet: "{{ item.subnet }}"
+          gateway: "{{ item.gateway }}"
+          iprange: "{{ item.iprange }}"
+      with_items: "{{ molecule_yml.networks | default(omit)}}"
+      when:
+        - molecule_yml.networks is defined
+
   tasks:
     - name: Log into a Docker registry
       docker_login:

@@ -42,6 +42,15 @@ class Docker(base.Base):
 
         driver:
           name: docker
+        networks:
+          - name: foo
+            gateway: 10.0.0.1
+            subnet: 10.0.0.0/24
+            iprange: 10.0.0.128/25
+          - name: bar
+            gateway: 10.0.1.1
+            subnet: 10.0.1.0/24
+            iprange: 10.0.1.128/25
         platforms:
           - name: instance
             hostname: instance

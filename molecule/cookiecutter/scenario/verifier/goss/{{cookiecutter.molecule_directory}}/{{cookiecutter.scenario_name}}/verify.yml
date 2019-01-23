@@ -35,7 +35,7 @@
           - "test_host_{{ ansible_hostname }}[-.\\w]*.yml"
         excludes:
           - "test_host_(?!{{ ansible_hostname }})[-.\\w]*.yml"
-        use_regex: yes
+        use_regex: true
       delegate_to: localhost
       register: test_files
       changed_when: false
